@@ -6,12 +6,12 @@ import HOU from "../padges/Home.jsx";
 const App = () => {
     return (
         <>
-            <BrowserRouter>
+
                 <Routes>
                     <Route index element={<HOU />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
-            </BrowserRouter>
+
         </>
     )
 
