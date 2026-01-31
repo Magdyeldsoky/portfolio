@@ -1,0 +1,72 @@
+import cn from "../lib/utlis.js";
+import {useEffect, useState} from "react";
+import {Menu, X} from "lucide-react";
+
+
+const Nav = () => {
+    const navItems = [{name: "Home", href: "#hero"}, {name: "About", href: "#about"}, {
+        name: "Skills", href: "#Skills"
+    }, {name: "Projects", href: "#"}, {name: "Contact", href: "#"},
+
+    ]
+    const [isscrold, setIsscrold] = useState(false)
+    const [isopen, setIsopen] = useState(false)
+    useEffect(() => {
+        const Handelscrole = () => {
+            setIsscrold(window.screenY > 10)
+
+        }
+        window.addEventListener("scroll", Handelscrole)
+        return () => {
+            window.removeEventListener("scroll", Handelscrole)
+        }
+    }, [])
+    return (<nav
+        className={cn("fixed w-full z-40 transition-all duration-300", isscrold ? "py-3 bg-bg/80 backdrop-blur-md shadow-xs " : "py-5")}>
+        <div className="container flex items-center justify-between">
+            <a href="#" className=" space-x-2 text-xl font-bold text-primary flex items-center">
+      <span className="relative z-10">
+
+          <span className="text-glow text-foreground">
+              Magdy.
+          </span>
+          Portfolio
+      </span>
+            </a>
+            <div className="desk hidden md:flex space-x-8 ">
+                {navItems.map((item, key) => (
+
+                    <a key={key} href={item.href}
+                       className="text-foreground/80 hover:text-primary transition-colors duration-300">{item.name}</a>
+
+
+                ))}
+
+            </div>
+            <button className="z-50 md:hidden text-foreground " onClick={() => setIsopen(!isopen)} >
+                {isopen ? <X size={24}/> : <Menu size={24}/> }
+            </button>
+
+            <div className={cn("fixed inset-0 bg-bg/95 backdrop-blur-md z-40 flex flex-col items-center justify-between ","transition duration-300  md:hidden" , isopen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none" )
+            }>
+
+
+                    <div className="mobil flex flex-col space-y-8 text-xl space-x-8 ">
+                        {navItems.map((item, key) => (
+
+                            <a key={key} href={item.href}
+                               className="text-foreground/80 hover:text-primary transition-colors duration-300"
+                            onClick={()=>setIsopen(false)}>{item.name}</a>
+
+
+                        ))}
+
+                    </div>
+            </div>
+
+
+        </div>
+    </nav>)
+
+}
+export default Nav
